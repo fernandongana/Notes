@@ -2,6 +2,7 @@ package co.mz.noteApp.adapter
 
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,9 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
+import kotlin.coroutines.coroutineContext
 
 class JobAdapter(var jobList: MutableList<Job>,
                  private val listener: (Job) -> Unit):RecyclerView.Adapter<JobAdapter.ViewHolder>(), Filterable {
@@ -55,6 +59,9 @@ class JobAdapter(var jobList: MutableList<Job>,
             } else {
                 holder.binding.textViewExpiry.setTextColor(Color.parseColor("#bdbdbd"))
                 holder.binding.textViewExpiry.text = "Expirado"
+            }
+            holder.binding.textViewFavorite.setOnClickListener {
+                Log.v("Favourite", jobs[position].toString() +" clicked")
             }
             holder.itemView.setOnClickListener {
                 listener(jobs[position])
