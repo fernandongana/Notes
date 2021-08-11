@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Info Empregos</string>
+    <string name="dashboard">Inicio</string>
+    <string name="perfil">Perfil</string>
+    <string name="definicoes">Definições</string>
+
+    <string name="perfil_fragment">Perfil</string>
+
+    <string name="details">Detalhes</string>
+    <string name="adUnitTest">ca-app-pub-3940256099942544/6300978111</string>
+
+    <string name="choose_theme_text">Escolha o tema</string>
+    <string name="change_theme_txt">Mudar o Tema</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="added_job">Trabalho Adicionado</string>
+    <string name="subscribe">Candidatar-me</string>
+    <string name="error">%1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+</resources>

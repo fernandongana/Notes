@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/dashboardFragment"
+    android:id="@+id/my_nav">
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="co.mz.noteApp.DashboardFragment"
+
+        tools:layout="@layout/fragment_dashboard"
+        />
+    <fragment
+        android:id="@+id/perfilFragment"
+        android:name="co.mz.noteApp.PerfilFragment"
+
+        tools:layout="@layout/fragment_perfil"
+        />
+    <fragment
+        android:id="@+id/definicoesFragment"
+        android:name="co.mz.noteApp.DefinicoesFragment"
+        tools:layout="@layout/fragment_definicoes"
+        />
+
+
+</navigation>

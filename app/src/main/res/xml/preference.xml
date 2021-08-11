@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:icon="@drawable/ic_notifications"
+        app:key="notifications_category"
+        app:title="Notificações">
+
+        <SwitchPreferenceCompat
+            app:key="notifications"
+            app:title="Activar Notificações"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:icon="@drawable/ic_night"
+        app:title="@string/change_theme_txt">
+
+        <ListPreference
+            android:dialogTitle="@string/choose_theme_text"
+            android:negativeButtonText="Cancelar"
+            android:entries="@array/theme_list"
+            android:entryValues="@array/theme_list_values"
+            android:key="themes"
+            android:summary="Clique para mudar o tema"
+            android:title="Temas"/>
+
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>
