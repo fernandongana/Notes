@@ -73,11 +73,12 @@ class JobAdapter(var jobList: MutableList<Job>,
         return object : Filter(){
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val charSearch = constraint.toString()
+
                 jobs = if(charSearch == null || charSearch.isEmpty()){
-                    jobs.clear()
                     jobList
                 }else{
                     val resultList = mutableListOf<Job>()
+                    resultList.clear()
                     for(row in jobs){
                         if(row.name?.toLowerCase()?.contains(constraint.toString().toLowerCase()) == true){
                             resultList.add(row)
@@ -92,6 +93,7 @@ class JobAdapter(var jobList: MutableList<Job>,
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+               // jobs.clear()
                 jobs = results?.values as MutableList<Job>
                 notifyDataSetChanged()
             }

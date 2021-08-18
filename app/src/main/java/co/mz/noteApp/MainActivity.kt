@@ -80,24 +80,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-    private fun linkAccount() {
-        // Create EmailAuthCredential with email and password
-        val credential = EmailAuthProvider.getCredential("", "")
-        // [START link_credential]
-        auth.currentUser!!.linkWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "linkWithCredential:success")
-                  //  val user = task.result?.user
-                   // updateUI(user)
-                } else {
-                    Log.w(TAG, "linkWithCredential:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show()
-                   // updateUI(null)
-                }
-            }
-        // [END link_credential]
-    }
 }

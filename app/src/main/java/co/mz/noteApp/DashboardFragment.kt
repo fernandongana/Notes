@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -46,7 +45,6 @@ class DashboardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentDashboardBinding.inflate(inflater,container,false)
-        init()
         return  binding.root
     }
 
@@ -88,7 +86,7 @@ class DashboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        init()
         binding.recyclerViewJobs.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -108,7 +106,9 @@ class DashboardFragment : Fragment() {
         viewModel.signInAnonymously()
         //job LiveData from ModelView
         viewModel.savedJobs.observe(viewLifecycleOwner, {
+
             if (it != null) {
+                jobList.clear()
                 binding.loading.visibility = View.GONE
                 for(jobSaved in it){
                     adapter.addJobs(jobSaved)
