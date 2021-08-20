@@ -5,9 +5,11 @@
         <item name="android:windowBackground">@color/background</item>
         <item name="android:navigationBarColor">@color/purple_500</item>
         <item name="android:icon">@color/white</item>
-        <item name="colorControlNormal">@color/background</item>
+        <item name="colorControlNormal">@color/black</item>
         <item name="android:editTextColor">@color/black</item>
         <item name="android:textColorHint">@color/black_light</item>
+
+        <item name="android:fontFamily">@font/nunito</item>
 
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>

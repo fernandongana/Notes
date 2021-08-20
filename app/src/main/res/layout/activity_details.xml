@@ -29,9 +29,9 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         style="@style/MyTabStyle"
-        app:tabGravity="fill"
+        app:tabGravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         >
     </com.google.android.material.tabs.TabLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -39,11 +39,11 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/appBarLayout"
         android:layout_centerInParent="true"
         android:layout_marginTop="5dp"
-        tools:layout_editor_absoluteX="8dp" />
+        tools:layout_editor_absoluteX="2dp" />
 
 
 </RelativeLayout>

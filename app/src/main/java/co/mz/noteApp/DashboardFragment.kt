@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import co.mz.noteApp.adapter.JobAdapter
 import co.mz.noteApp.data.Job
 import co.mz.noteApp.databinding.FragmentDashboardBinding
+import co.mz.noteApp.viewmodel.CategoryViewModel
 import co.mz.noteApp.viewmodel.JobsViewModel
 
 
@@ -28,15 +29,13 @@ class DashboardFragment : Fragment() {
 
     private lateinit var viewModel: JobsViewModel
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-      //  viewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
         viewModel = activity?.run {
-            //ViewModelProviders.of(this)[MainViewModel::class.java]
             ViewModelProvider(this).get(JobsViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
-
     }
 
 
@@ -87,6 +86,8 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+
+
         binding.recyclerViewJobs.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -100,10 +101,12 @@ class DashboardFragment : Fragment() {
         }
     }
 
+
+
     private fun init(){
         binding.recyclerViewJobs.adapter = adapter
         binding.recyclerViewJobs.setHasFixedSize(true)
-        viewModel.signInAnonymously()
+      //  viewModel.getAllJobs()
         //job LiveData from ModelView
         viewModel.savedJobs.observe(viewLifecycleOwner, {
 

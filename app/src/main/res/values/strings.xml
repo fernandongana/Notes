@@ -13,7 +13,7 @@
     <string name="change_theme_txt">Mudar o Tema</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="added_job">Trabalho Adicionado</string>
-    <string name="subscribe">Candidatar-me</string>
+    <string name="subscribe">Submeter Candidatura</string>
     <string name="error">%1$s</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

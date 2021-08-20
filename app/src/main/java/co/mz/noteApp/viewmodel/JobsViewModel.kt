@@ -20,7 +20,6 @@ import java.lang.Exception
 class JobsViewModel:ViewModel() {
 
     private val store = FirebaseFirestore.getInstance()
-    private var auth = FirebaseAuth.getInstance()
     private val jobCollection = store.collection(NODE_JOBS).orderBy("createdAt", Query.Direction.DESCENDING)
 
     private val settings = firestoreSettings {
@@ -46,19 +45,18 @@ class JobsViewModel:ViewModel() {
     }
 
 
-     private fun getRealTimeUpdate(): LiveData<List<Job>>{
-        jobCollection.addSnapshotListener(EventListener<QuerySnapshot> { value, e ->
+    fun getAllJobs(): LiveData<List<Job>>{
+        jobCollection.addSnapshotListener(EventListener { value, e ->
             if (e != null) {
                 Log.w(TAG, "Listen failed.", e)
                 return@EventListener
             }
-
                // val jobs = value?.documentChanges
                 var jobListTemp : MutableList<Job> = mutableListOf()
                 for (j in value!!) {
                     var job = j.toObject(Job::class.java)
                     jobListTemp.add(job)
-                    Log.e(TAG, "Job: ${job}")
+                 //   Log.e(TAG, "Job: ${job}")
                 }
                 savedJobs.value = jobListTemp
 
@@ -66,23 +64,7 @@ class JobsViewModel:ViewModel() {
          return savedJobs
     }
 
-    fun signInAnonymously() {
-        // [START signin_anonymously]
-            auth.signInAnonymously()
-                .addOnCompleteListener() { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(ContentValues.TAG, "signInAnonymously:success")
-                        getRealTimeUpdate()
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(ContentValues.TAG, "signInAnonymously:failure", task.exception)
 
-
-                    }
-                }
-
-    }
 
     override fun onCleared() {
         super.onCleared()

@@ -50,18 +50,21 @@
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="5dp"
                             android:layout_marginEnd="4dp"
-                            android:fontFamily="sans-serif-light"
+                            android:fontFamily="@font/nunito_sans_semibold"
+                            android:textFontWeight="700"
                             android:includeFontPadding="true"
                             android:textColor="?android:textColorPrimary"
                             android:textSize="18sp" />
 
                     <ImageView
                         android:id="@+id/text_view_favorite"
+                        android:contentDescription="Favorito"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="12dp"
                         android:layout_marginTop="5dp"
                         android:clickable="true"
+                        android:focusable="true"
                         android:src="@drawable/ic_favorite"
                         app:tint="@color/black"
                         android:layout_alignParentEnd="true"
@@ -74,7 +77,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="-5dp"
-            android:fontFamily="sans-serif-condensed-light"
+            android:fontFamily="@font/nunito_sans"
+            android:textFontWeight="400"
             android:textSize="14sp"
             android:textColor="?android:textColorPrimary"
             android:textStyle="normal" />
@@ -91,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="5dp"
-                    android:fontFamily="sans-serif-light"
+                    android:fontFamily="@font/nunito_sans_light_italic"
                     android:textSize="11sp"
                     android:textStyle="normal" />
 
@@ -102,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="20dp"
-                    android:fontFamily="sans-serif-smallcaps"
+                    android:fontFamily="@font/nunito_sans_light_italic"
                     android:textSize="12sp"
                     android:textStyle="normal" />
 
@@ -114,7 +118,7 @@
                     android:layout_marginEnd="12dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="5dp"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/nunito_sans_light_italic"
                     android:textSize="11sp"
                     android:layout_alignParentEnd="true"
                     android:textColor="@color/blue"

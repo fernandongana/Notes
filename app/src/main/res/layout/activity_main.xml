@@ -12,46 +12,50 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         >
+
         <TextView
             android:id="@+id/mainTitle"
-            android:layout_marginStart="20dp"
-            android:textSize="30sp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:layout_marginRight="60dp"
-            android:fontFamily="sans-serif-condensed"
-            android:layout_marginBottom="2dp"
-            android:text="Let's Find Your"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_width="match_parent"/>
-        <TextView
-            android:id="@+id/mainTitle2"
             android:layout_marginStart="20dp"
-            android:textSize="30sp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:layout_marginRight="60dp"
+            android:layout_marginEnd="100dp"
             android:layout_marginBottom="2dp"
-            android:fontFamily="sans-serif-condensed"
-            android:text="Job"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"/>
+
+            android:fontFamily="@font/nunito_sans_semibold"
+            android:text="Let's Find Your Job"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:elevation="0dp"
             android:layout_width="match_parent"
             app:contentInsetLeft="-50dp"
-            app:contentInsetRight="0dp"
+            app:contentInsetStart="-50dp"
             android:layout_marginTop="0dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginEnd="20dp"
-            app:contentInsetStart="0dp"
             android:layout_height="40dp"
             app:titleTextColor="@color/white"
             app:theme="@style/Theme.Notes"
-            />
+            >
+        </com.google.android.material.appbar.MaterialToolbar>
 
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_categories"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="18dp"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal"
+                    tools:listitem="@layout/recycler_view_category"
+                    />
 
 
 
@@ -61,6 +65,7 @@
         android:layout_width="match_parent"
         android:layout_marginTop="140dp"
         android:layout_height="match_parent">
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
@@ -69,6 +74,7 @@
             app:layout_constraintRight_toLeftOf="parent"
             app:layout_constraintLeft_toRightOf="parent"
             app:menu="@menu/bottom_menu"/>
+
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment"
