@@ -53,7 +53,7 @@ class JobAdapter(var jobList: MutableList<Job>,
 
             if (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS).toInt() > 0) {
                 holder.binding.textViewExpiry.text = "Expira em " +
-                        TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS).toString() + " dias"
+                        TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS).toString() + " dia(s)"
             } else if (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS).toInt() == 0) {
                 holder.binding.textViewExpiry.text = "Expira hoje"
             } else {

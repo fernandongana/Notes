@@ -15,7 +15,14 @@ data class Job (
     var expiry: Date? = null,
     var name: String? = null,
     var company: String? = null,
+    var companyWeb: String? = null,
     var location: String? = null,
+    var requeriments: String? = null,
+    var description: List<String>? = null,
         ): Parcelable {
-    constructor() : this(null, null, "", "", "")
+    constructor() : this(null, null, "", "", "","", "", emptyList())
+
+
+
+
 }

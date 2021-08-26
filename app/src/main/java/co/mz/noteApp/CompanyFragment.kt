@@ -40,6 +40,7 @@ class CompanyFragment() : Fragment() {
 
         val job = arguments?.getParcelable<Job>("job") as Job
         binding.textViewCompany.text = job.company.toString()
+        binding.textViewWeb.text = job.companyWeb.toString()
 
         mAdView = binding.adView
         val adRequest = AdRequest.Builder().build()
