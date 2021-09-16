@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import co.mz.noteApp.adapter.JobAdapter
 import co.mz.noteApp.data.Job
 import co.mz.noteApp.databinding.FragmentDashboardBinding
-import co.mz.noteApp.viewmodel.CategoryViewModel
 import co.mz.noteApp.viewmodel.JobsViewModel
 
 
@@ -86,8 +85,6 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-
-
         binding.recyclerViewJobs.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {

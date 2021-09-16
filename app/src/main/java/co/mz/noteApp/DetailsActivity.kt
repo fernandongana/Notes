@@ -19,7 +19,7 @@ import com.google.firebase.ktx.Firebase
 
 class DetailsActivity : AppCompatActivity() {
 
-    lateinit var tabLayout: TabLayout
+    private lateinit var tabLayout: TabLayout
     lateinit var viewPager: ViewPager
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 

@@ -27,6 +27,7 @@ import com.google.firebase.ktx.Firebase
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.view.size
 import androidx.navigation.fragment.FragmentNavigator
 
 
@@ -67,24 +68,20 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         bottomNavigationView.setupWithNavController(navController)
-
         navController.addOnDestinationChangedListener { _, destination, _ ->
-
-
             when ((destination as FragmentNavigator.Destination).className) {
                 // show categories in dashboard fragment
                 DashboardFragment::class.qualifiedName -> {
                     binding.recyclerViewCategories.visibility = View.VISIBLE
-
+                    binding.toolbar.visibility = View.VISIBLE
 
                 }
                 // hide on other fragments
                 else -> {
                     binding.recyclerViewCategories.visibility = View.GONE
-
+                    binding.toolbar.visibility = View.GONE
                 }
             }
-
         }
 
         val appBarConfig = AppBarConfiguration(

@@ -8,19 +8,23 @@
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="co.mz.noteApp.DashboardFragment"
-
         tools:layout="@layout/fragment_dashboard"
         />
     <fragment
         android:id="@+id/perfilFragment"
         android:name="co.mz.noteApp.PerfilFragment"
-
         tools:layout="@layout/fragment_perfil"
         />
     <fragment
         android:id="@+id/definicoesFragment"
         android:name="co.mz.noteApp.DefinicoesFragment"
         tools:layout="@layout/fragment_definicoes"
+        />
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="co.mz.noteApp.LoginFragment"
+        tools:layout="@layout/fragment_login"
         />
 
 

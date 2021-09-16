@@ -10,18 +10,19 @@ plugins {
 android {
     signingConfigs {
         debug {
-            storeFile file('C:\\Users\\hp\\AndroidStudioProjects\\Notes\\app\\emprego.jks')
+            storeFile file('C:\\Users\\sun5et\\Desktop\\Sistemas\\Android\\Notes\\app\\emprego.jks')
             storePassword 'dino57'
             keyAlias 'emprego'
             keyPassword 'dino57'
         }
         release {
-            storeFile file('C:\\Users\\hp\\AndroidStudioProjects\\Notes\\app\\emprego.jks')
+            storeFile file('C:\\Users\\sun5et\\Desktop\\Sistemas\\Android\\Notes\\app\\emprego.jks')
             storePassword 'dino57'
             keyAlias 'emprego'
             keyPassword 'dino57'
         }
     }
+
     compileSdk 30
     buildToolsVersion "30.0.3"
 
@@ -68,13 +69,14 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
     implementation 'androidx.preference:preference-ktx:1.1.1'
-    implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'com.google.firebase:firebase-core:19.0.1'
     implementation 'com.google.firebase:firebase-firestore-ktx:23.0.3'
-    implementation 'com.google.android.gms:play-services-ads:20.2.0'
+    implementation 'com.google.android.gms:play-services-ads:20.3.0'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.firebase:firebase-crashlytics-ktx:18.2.1'
     implementation 'com.google.firebase:firebase-analytics-ktx:19.0.1'
+    implementation 'androidx.annotation:annotation:1.2.0'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'
     def lifecycle_version = "2.3.1"
     // Lifecycle
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"

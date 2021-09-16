@@ -55,7 +55,7 @@ class JobDetailFragment : Fragment() {
             textView.setCompoundDrawablesWithIntrinsicBounds(context?.let { ContextCompat.getDrawable(it,R.drawable.ic_done) }, null,
                 null, null)
             textView.compoundDrawablePadding = 10
-            textView.textSize = 18.0F
+            textView.textSize = 16.0F
             textView.setPadding(0, 5, 0, 5)
             val lp = AbsListView.LayoutParams(
                 AbsListView.LayoutParams.WRAP_CONTENT,

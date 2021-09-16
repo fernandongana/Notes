@@ -25,7 +25,7 @@
             android:id="@+id/category_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_sans_semibold"
+            android:fontFamily="@font/nunito_sans_bold"
             android:textFontWeight="800"
             android:textAlignment="center"
             android:elevation="20dp"
