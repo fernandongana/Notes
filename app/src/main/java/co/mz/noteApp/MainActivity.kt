@@ -74,7 +74,6 @@ class MainActivity : AppCompatActivity() {
                 DashboardFragment::class.qualifiedName -> {
                     binding.recyclerViewCategories.visibility = View.VISIBLE
                     binding.toolbar.visibility = View.VISIBLE
-
                 }
                 // hide on other fragments
                 else -> {

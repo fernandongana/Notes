@@ -1,5 +1,6 @@
 package co.mz.noteApp
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import co.mz.noteApp.databinding.FragmentLoginBinding
 import co.mz.noteApp.viewmodel.UserViewModel
+import android.content.SharedPreferences
+import android.util.Log
+
 
 class LoginFragment : Fragment() {
 
@@ -34,27 +38,38 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         savedStateHandle = findNavController().previousBackStackEntry!!.savedStateHandle
         savedStateHandle.set(LOGIN_SUCCESSFUL, false)
-      //  auth = Firebase.auth
 
         val usernameEditText = binding.username
         val passwordEditText = binding.password
         val loginButton = binding.login
 
         loginButton.setOnClickListener {
-            val username = usernameEditText.text.toString()
-            val password = passwordEditText.text.toString()
+            val username = usernameEditText.text.toString().trim()
+            val password = passwordEditText.text.toString().trim()
             login(username, password)
         }
     }
-
-
-
+    
     private fun login(email: String, password: String) {
         val login = userViewModel.login(email, password)
         login.observe(viewLifecycleOwner, { result ->
             if (result != null) {
-                savedStateHandle.set(LOGIN_SUCCESSFUL, true)
-                findNavController().popBackStack()
+
+                result.getIdToken(false).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        var token = it.result?.token.toString()
+                        val preferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
+                        preferences.edit().putString("TOKEN", token).apply()
+                        preferences.edit().putString("Email", email).apply()
+                        preferences.edit().putString("Password", password).apply()
+                        Log.v("Login Token", token)
+                        savedStateHandle.set(LOGIN_SUCCESSFUL, true)
+                        findNavController().popBackStack()
+                    }else{
+                        Log.v("Error", it.exception.toString())
+                    }
+                }
+
             } else {
                 showErrorMessage()
             }

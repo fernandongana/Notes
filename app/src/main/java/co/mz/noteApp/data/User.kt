@@ -7,9 +7,11 @@ import kotlinx.parcelize.Parcelize
 @Keep
 @Parcelize
 class User (
-    val userId: String,
-    val email: String,
-    val displayName: String? = null,
-    val password: String? = null
+    val userId: String? = null,
+    val email: String? = null,
+    var photoUri : String? = null,
+    var displayName: String? = null,
+    var password: String? = null
         ): Parcelable {
+    constructor() : this(null, null, "", "", "")
 }

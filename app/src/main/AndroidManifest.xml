@@ -11,23 +11,25 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Notes">
+        <activity
+            android:name=".EditPerfilActivity"
+            android:exported="true" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-2403407111397911~1838019953"/>
+            android:value="ca-app-pub-2403407111397911~1838019953" />
 
-        <activity android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustPan"
-            android:name=".DetailsActivity"
-            android:parentActivityName=".MainActivity"
-            android:exported="true">
-
-        </activity>
         <activity
+            android:name=".DetailsActivity"
+            android:exported="true"
             android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustPan"
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
