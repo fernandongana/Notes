@@ -8,6 +8,8 @@
         android:icon="@drawable/ic_search"
         android:iconTint="@color/black_light"
         android:title="Pesquisar"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
         app:showAsAction="ifRoom|withText"
         app:theme="@style/Theme.Notes"
         app:actionViewClass="android.widget.SearchView" />
