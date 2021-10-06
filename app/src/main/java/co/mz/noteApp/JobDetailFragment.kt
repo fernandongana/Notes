@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import co.mz.noteApp.data.Job
+import co.mz.noteApp.model.Job
 import co.mz.noteApp.databinding.FragmentJobDetailBinding
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView

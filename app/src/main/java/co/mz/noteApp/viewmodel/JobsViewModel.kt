@@ -1,18 +1,15 @@
 package co.mz.noteApp.viewmodel
 
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import co.mz.noteApp.data.Job
-import co.mz.noteApp.data.NODE_JOBS
-import com.google.firebase.auth.FirebaseAuth
+import co.mz.noteApp.model.Job
+import co.mz.noteApp.util.NODE_JOBS
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestoreSettings
 import java.lang.Exception
 

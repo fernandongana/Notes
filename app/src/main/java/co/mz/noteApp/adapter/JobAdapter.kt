@@ -6,16 +6,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import co.mz.noteApp.data.Job
+import co.mz.noteApp.model.Job
 import co.mz.noteApp.databinding.RecyclerViewJobBinding
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import kotlin.coroutines.coroutineContext
 
 class JobAdapter(var jobList: MutableList<Job>,
                  private val listener: (Job) -> Unit):RecyclerView.Adapter<JobAdapter.ViewHolder>(), Filterable {

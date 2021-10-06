@@ -1,4 +1,4 @@
-package co.mz.noteApp.data
+package co.mz.noteApp.model
 
 import android.net.Uri
 import android.os.Parcelable
@@ -8,11 +8,10 @@ import kotlinx.parcelize.Parcelize
 @Keep
 @Parcelize
 class User (
-    val userId: String? = null,
-    val email: String? = null,
-    var photoUri : Uri? = null,
+    var userId: String? = null,
+    var email: String? = null,
+    var photoUri : String? = null,
     var displayName: String? = null,
-    var password: String? = null
         ): Parcelable {
-    constructor() : this(null, null, null, "", "")
+    constructor() : this(null, null, null, "")
 }

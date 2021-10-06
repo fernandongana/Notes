@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import co.mz.noteApp.CompanyFragment
 import co.mz.noteApp.JobDetailFragment
-import co.mz.noteApp.data.Job
+import co.mz.noteApp.model.Job
 import android.os.Bundle
 
 

@@ -1,4 +1,4 @@
-package co.mz.noteApp.data
+package co.mz.noteApp.model
 
 import android.os.Parcelable
 import androidx.annotation.Keep

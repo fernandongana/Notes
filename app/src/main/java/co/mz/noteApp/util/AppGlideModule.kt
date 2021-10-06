@@ -1,4 +1,4 @@
-package co.mz.noteApp.viewmodel
+package co.mz.noteApp.util
 
 import android.content.Context
 import android.util.Log

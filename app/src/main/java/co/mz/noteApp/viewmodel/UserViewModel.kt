@@ -33,6 +33,10 @@ class UserViewModel : ViewModel(){
         return user
     }
 
+    fun post(value: FirebaseUser){
+        user.postValue(value)
+    }
+
     fun link(email: String, password: String): LiveData<FirebaseUser>{
         val credential = EmailAuthProvider.getCredential(email, password)
         auth.signInWithCredential(credential)
@@ -41,6 +45,7 @@ class UserViewModel : ViewModel(){
                    // Log.d(TAG, "linkWithCredential:success")
                   //  val user = task.result?.user
                     user.value = task.result?.user
+
                   //  linkToAnonymous(email, password)
                 } else {
                     user.value = null

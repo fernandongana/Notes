@@ -1,10 +1,9 @@
 package co.mz.noteApp.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import co.mz.noteApp.data.Category
+import co.mz.noteApp.model.Category
 import co.mz.noteApp.databinding.RecyclerViewCategoryBinding
 
 

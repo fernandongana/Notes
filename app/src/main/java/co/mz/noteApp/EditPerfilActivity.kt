@@ -9,20 +9,25 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ImageView
+import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.ViewModelProvider
-import co.mz.noteApp.data.User
+import co.mz.noteApp.model.User
 import co.mz.noteApp.databinding.ActivityEditPerfilBinding
+import co.mz.noteApp.util.NODE_USERS
 import co.mz.noteApp.viewmodel.UserViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -36,12 +41,10 @@ class EditPerfilActivity : AppCompatActivity() {
     private var user = Firebase.auth.currentUser
 
     private lateinit var userViewModel: UserViewModel
-
-    private val PICKIMAGEREQUEST = 71
     private var filePath: Uri? = null
     private var firebaseStore: FirebaseStorage? = null
+    private val firebaseFirestore = FirebaseFirestore.getInstance()
     private var storageReference: StorageReference? = null
-    private lateinit var uploadImage: ImageView
     private var displayName: String? = null
     private var email: String? = null
 
@@ -58,23 +61,26 @@ class EditPerfilActivity : AppCompatActivity() {
         drawable = DrawableCompat.wrap(drawable!!)
         DrawableCompat.setTint(drawable, Color.WHITE)
         supportActionBar?.setHomeAsUpIndicator(drawable)
-
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        init()
 
         firebaseStore = FirebaseStorage.getInstance()
         storageReference = FirebaseStorage.getInstance().reference
-
         binding.displayName.setText(user?.displayName.toString())
         binding.email.setText(user?.email.toString())
+        Glide.with(this /* context */).load(user?.photoUrl).diskCacheStrategy(
+            DiskCacheStrategy.ALL).into(binding.imagePreview).waitForLayout()
+        init()
+        loading(false)
 
-        uploadImage = binding.imagePreview
+        user?.let { userViewModel.post(it) }
 
-        binding.btnChooseImage.setOnClickListener {
+        binding.imagePreview.setOnClickListener {
+            loading(true)
             launchGallery()
         }
 
         binding.addButton.setOnClickListener{
+            loading(true)
             clearTextField()
             displayName = binding.displayName.text.toString().trim()
             email = binding.email.text.toString().trim()
@@ -86,18 +92,32 @@ class EditPerfilActivity : AppCompatActivity() {
                 binding.inputLayoutEmail.error = "O email nao pode ser nulo"
                 return@setOnClickListener
             }
-            uploadImage()
 
+            saveFirestore(displayName!!, user?.photoUrl!!)
+            loading(false)
+        }
+    }
 
-
+    private fun loading( loading : Boolean){
+        if(loading){
+            binding.loading.visibility = View.VISIBLE
+            binding.layout.visibility = View.GONE
+        }else{
+            binding.loading.visibility = View.GONE
+            binding.layout.visibility = View.VISIBLE
         }
     }
 
 
     private fun init(){
         userViewModel.user.observe(this, {
+            Log.v("Init Function", "Loading")
             if (it != null) {
                 user = it
+                loading(false)
+            }else{
+                Log.v("Init Function", "Failed load user")
+                loading(false)
             }
         })
     }
@@ -117,29 +137,28 @@ class EditPerfilActivity : AppCompatActivity() {
             })?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val downloadUri = task.result
-                    Log.v("URI", "uri : ${downloadUri.toString()}")
-                    addUploadRecordToDb(downloadUri!!)
-
+                    saveProfile(downloadUri.toString())
+                    loading(false)
                 }
             }?.addOnFailureListener{
-
+                Toast.makeText(this, "Falha ao Gravar", Toast.LENGTH_SHORT).show()
+                loading(false)
             }
         }else{
             Toast.makeText(this, "Please Upload an Image", Toast.LENGTH_SHORT).show()
+            loading(false)
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICKIMAGEREQUEST && resultCode == Activity.RESULT_OK) {
-            if(data == null || data.data == null){
-                return
-            }
-
-            filePath = data.data
+    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // There are no request codes
+            val data: Intent? = result.data
+            filePath = data?.data
             try {
                 val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filePath)
-                uploadImage.setImageBitmap(bitmap)
+                binding.imagePreview.setImageBitmap(bitmap)
+                uploadImage()
             } catch (e: IOException) {
                 e.printStackTrace()
             }
@@ -150,39 +169,47 @@ class EditPerfilActivity : AppCompatActivity() {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICKIMAGEREQUEST)
+        resultLauncher.launch(intent)
     }
 
-    private fun addUploadRecordToDb(uri: Uri){
-        val db = FirebaseFirestore.getInstance()
-
-        val data = HashMap<String, Any>()
-        data["imageUrl"] = uri
-
-        db.collection("users")
-            .add(data)
-            .addOnSuccessListener {
-               // imageUri = uri
-                val userProfile = User()
-                userProfile.displayName = displayName
-                userProfile.photoUri = uri
-                updateProfile(userProfile)
-                Toast.makeText(this, "Saved to DB", Toast.LENGTH_LONG).show()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Error saving to DB $e", Toast.LENGTH_LONG).show()
-            }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        userViewModel.initiate()
+        user?.let { userViewModel.post(it) }
     }
 
-    private fun clearTextField(){
-        binding.inputLayoutName.error = null
-        binding.inputLayoutEmail.error = null
+    private fun saveProfile(uri: String){
+        val tempUser = User()
+        tempUser.photoUri = uri
+
+        user?.email?.let { it ->
+            firebaseFirestore.collection(NODE_USERS)
+                .document(it)
+                .update("photoUri", tempUser.photoUri.toString())
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Gravado com sucesso.", Toast.LENGTH_LONG).show()
+                    user?.let { userViewModel.post(it) }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error saving to DB $e", Toast.LENGTH_LONG).show()
+                }
+        }
+
+        val userProfile = User()
+        userProfile.displayName = displayName
+        userProfile.photoUri = uri
+        updateProfilePhoto(userProfile)
     }
 
-    private fun updateProfile(userProfile: User){
+    private fun saveFirestore(name : String, uri: Uri){
+        val tempUser = User()
+        tempUser.userId = user?.uid.toString()
+        tempUser.displayName = name
+        tempUser.photoUri = uri.toString()
+        tempUser.email = user?.email.toString()
+
         val profileUpdates = userProfileChangeRequest {
-            displayName = userProfile.displayName
-            photoUri = userProfile.photoUri
+            displayName = name
         }
 
         user!!.updateProfile(profileUpdates)
@@ -191,6 +218,39 @@ class EditPerfilActivity : AppCompatActivity() {
                     Toast.makeText(this, "Actualizado com sucesso", Toast.LENGTH_SHORT).show()
                     finish()
                 }
+            }
+
+        user?.email?.let {
+            firebaseFirestore.collection(NODE_USERS)
+                .document(it)
+                .set(tempUser, SetOptions.merge())
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Gravado com sucesso.", Toast.LENGTH_LONG).show()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error saving to DB $e", Toast.LENGTH_LONG).show()
+                }
+        }
+    }
+
+    private fun clearTextField(){
+        binding.inputLayoutName.error = null
+        binding.inputLayoutEmail.error = null
+    }
+
+    private fun updateProfilePhoto(userProfile: User){
+        val profileUpdates = userProfileChangeRequest {
+            photoUri = Uri.parse(userProfile.photoUri)
+        }
+
+        user!!.updateProfile(profileUpdates)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    finish()
+                }
+            }
+            .addOnFailureListener { task->
+                Toast.makeText(this, task.message.toString(), Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -206,6 +266,4 @@ class EditPerfilActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-
 }

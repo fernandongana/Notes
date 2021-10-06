@@ -21,6 +21,8 @@ import co.mz.noteApp.viewmodel.UserViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import java.io.IOException
 
@@ -31,59 +33,28 @@ class PerfilFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var userViewModel: UserViewModel
-    private lateinit var photoImage: ImageView
+    private var fireBaseUser = Firebase.auth.currentUser
 
-    @RequiresApi(Build.VERSION_CODES.P)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navController = findNavController()
         binding.loading.visibility = View.VISIBLE
         binding.layout.visibility = View.GONE
-        photoImage = binding.photoUri
         userViewModel.user.observe(viewLifecycleOwner, { user ->
             if (user?.email != null) {
-               // val storageReference : StorageReference = user.photoUrl
 
-                   val img = "https://firebasestorage.googleapis.com/v0/b/noteapp-6d2fa.appspot.com/o/uploads%2FIMG_0015.JPG?alt=media"
-               Glide.with(this /* context */).load(img).diskCacheStrategy(DiskCacheStrategy.ALL).into(photoImage).waitForLayout()
-
-                Log.v("USER", "user on profile Url : ${user?.photoUrl}")
-
-               /*  try {
-                 //    val bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, userViewModel.user.value?.photoUrl)
-                     val bitmap = when {
-                         Build.VERSION.SDK_INT < 28 -> MediaStore.Images.Media.getBitmap(
-                             activity?.contentResolver,
-                             user.photoUrl
-                         )
-                         else -> {
-                             val source = activity?.contentResolver?.let {
-                                 user.photoUrl?.let { it1 ->
-                                     ImageDecoder.createSource(
-                                         it,
-                                         it1
-                                     )
-                                 }
-                             }
-                             ImageDecoder.decodeBitmap(source!!)
-                         }
-                     }
-                   //  photoImage.setImageBitmap(bitmap)
-                 } catch (e: IOException) {
-                    e.printStackTrace()
-                 } */
+                Glide.with(this /* context */).load(fireBaseUser?.photoUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL).into(binding.photoUri).waitForLayout()
 
                 binding.loading.visibility = View.GONE
                 binding.layout.visibility = View.VISIBLE
                 Log.v("init", user.email.toString())
                 val nameTexView = binding.name
                 val emailTexView = binding.email
-                nameTexView.text = userViewModel.user.value?.displayName.toString()
-                emailTexView.text = userViewModel.user.value?.email.toString()
+                nameTexView.text = fireBaseUser?.displayName.toString()
+                emailTexView.text = fireBaseUser?.email.toString()
                 showWelcomeMessage(user.email.toString())
-                Log.v("user Profile", "Already have User......")
             } else {
-                Log.v("user Profile", "Navigate to Login......")
                 showWelcomeMessage("Login Failed")
                 navController.navigate(R.id.loginFragment)
             }
@@ -97,8 +68,7 @@ class PerfilFragment : Fragment() {
     }
 
 
-
-    private fun showWelcomeMessage(user : String) {
+    private fun showWelcomeMessage(user: String) {
         Toast.makeText(requireContext(), "User: $user", Toast.LENGTH_SHORT).show()
     }
 
@@ -108,21 +78,24 @@ class PerfilFragment : Fragment() {
             ViewModelProvider(this).get(UserViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
+        loadUser()
+    }
+
+    private fun loadUser(){
         val preferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
-        val retrivedToken = preferences.getString("TOKEN", null) //second parameter default value.
+        val retrivedToken = preferences.getString("TOKEN", null)
         val retrivedEmail = preferences.getString("Email", null)
         val retrivedPassword = preferences.getString("Password", null)
-        if(retrivedToken.isNullOrEmpty()){
+        if (retrivedToken.isNullOrEmpty()) {
             userViewModel.initiate()
-        }else{
-            if(userViewModel.user.value == null){
+        } else {
+            if (userViewModel.user.value == null) {
                 if (retrivedPassword != null && retrivedEmail != null) {
                     userViewModel.link(retrivedEmail, retrivedPassword)
                 }
             }
 
         }
-
     }
 
     override fun onCreateView(
@@ -130,8 +103,8 @@ class PerfilFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentPerfilBinding.inflate(inflater,container,false)
-        return  binding.root
+        _binding = FragmentPerfilBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
 

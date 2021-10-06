@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import co.mz.noteApp.adapter.JobAdapter
-import co.mz.noteApp.data.Job
+import co.mz.noteApp.model.Job
 import co.mz.noteApp.databinding.FragmentDashboardBinding
 import co.mz.noteApp.viewmodel.JobsViewModel
 

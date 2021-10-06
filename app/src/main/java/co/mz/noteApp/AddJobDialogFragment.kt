@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
-import co.mz.noteApp.data.Job
+import co.mz.noteApp.model.Job
 import co.mz.noteApp.databinding.FragmentAddJobDialogBinding
 import co.mz.noteApp.viewmodel.JobsViewModel
 import java.util.*

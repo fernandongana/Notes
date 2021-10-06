@@ -11,7 +11,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.viewpager.widget.ViewPager
 import co.mz.noteApp.adapter.DetailsTabAdapter
-import co.mz.noteApp.data.Job
+import co.mz.noteApp.model.Job
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
